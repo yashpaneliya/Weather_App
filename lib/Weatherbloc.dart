@@ -8,10 +8,10 @@ class WeatherEvent extends Equatable{
   List<Object> get props => [];
 }
 
-class FetchEvent extends WeatherEvent{
+class FetchWeather extends WeatherEvent{
   final city;
 
-  FetchEvent(this.city);
+  FetchWeather(this.city);
   @override
   List<Object> get props => [city];
 }
@@ -36,7 +36,9 @@ class loading extends WeatherState{
 class loaded extends WeatherState{
 final weather;
 
+
   loaded(this.weather);
+WeatherModel get getWeather => weather;
 
 @override
   // TODO: implement props
@@ -59,13 +61,14 @@ class WeatherBloc extends Bloc<WeatherEvent,WeatherState>{
   @override
   Stream<WeatherState> mapEventToState(WeatherEvent event) async* {
     // TODO: implement mapEventToState
-    if(event is FetchEvent){
+    if(event is FetchWeather){
       yield loading();
       try{
         WeatherModel weather =await wp.getWeather(event.city);
         yield loaded(weather);
       }
       catch(e){
+        print("hiii");
         yield notloaded();
       }
     }
