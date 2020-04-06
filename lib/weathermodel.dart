@@ -10,5 +10,14 @@ class WeatherModel{
   double get getTemp => temp-272.5;
   double get getMaxTemp => max_temp-272.5;
   double get getMinTemp => min_temp-272.5;
-  
+
+  factory WeatherModel.fromJSON(Map<String,dynamic> json){
+    return WeatherModel(
+      json["temp"],
+      json["pressure"],
+      json["humidity"],
+      json["temp_max"],
+      json["temp_min"]
+    );
+  }
 }
