@@ -10,11 +10,11 @@ void main()
   runApp(
     MaterialApp(
     theme: ThemeData(
-      fontFamily: 'gs'
+      fontFamily: 'gs',
+      backgroundColor: Colors.blue
     ),
     debugShowCheckedModeBanner: false,
     home: Scaffold(
-      backgroundColor: Colors.white,
       body: BlocProvider(
         create: (context) => WeatherBloc(weatherRepo()),
         child: SearchPage(),
@@ -24,16 +24,15 @@ void main()
 }
 
 class SearchPage extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
-    final WeatherBloc bloc = BlocProvider.of<WeatherBloc>(context);
+    final bloc = BlocProvider.of<WeatherBloc>(context);
     var controller = TextEditingController();
     return ListView(
       children: <Widget>[
         Center(
           child: Container(
-            child: FlareActor('assets/WorldSpin.flr',fit: BoxFit.contain,animation: "roll",),
+            child: FlareActor('assets/WorldSpin.flr',fit: BoxFit.contain,animation: "roll"),
             height: 300.0,
             width: 300.0,
           ),
@@ -45,7 +44,7 @@ class SearchPage extends StatelessWidget {
               {return Container(
                 child:Column(
                   children: <Widget>[
-                    Center(child: Container(margin:EdgeInsets.only(top:20.0),child: Text("Get Weather",style: TextStyle(fontSize: 30.0,color: Colors.black),)),),
+                    Center(child: Container(margin:EdgeInsets.only(top:20.0),child: Text("Weather-Wise",style: TextStyle(fontSize: 30.0,color: Colors.black),)),),
                     Container(
                       margin: EdgeInsets.only(top: 25.0),
                       width: MediaQuery.of(context).size.width-50.0,
@@ -104,7 +103,7 @@ class SearchPage extends StatelessWidget {
 }
 
 class showWeather extends StatelessWidget {
-  WeatherModel weather;
+  final WeatherModel weather;
   final city;
 
   showWeather(this.weather, this.city);
@@ -147,13 +146,19 @@ class showWeather extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-
+              
               Text(weather.gethumid.round().toString()+" %",style: TextStyle(color: Colors.black, fontSize: 30),),
               Text("Humidity",style: TextStyle(color: Colors.black, fontSize: 14),),
               SizedBox(
                 height: 20,
               ),
 
+              Text(weather.getSpeed.toString()+" m/s",style: TextStyle(color: Colors.black, fontSize: 30),),
+              Text("Wind Speed",style: TextStyle(color: Colors.black, fontSize: 14),),
+              SizedBox(
+                height: 20,
+              ),
+              
               Container(
                 width: double.infinity,
                 height: 50,

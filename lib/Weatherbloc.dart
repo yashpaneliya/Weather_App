@@ -36,8 +36,8 @@ class loading extends WeatherState{
 class loaded extends WeatherState{
 final weather;
 
-
   loaded(this.weather);
+
 WeatherModel get getWeather => weather;
 
 @override
@@ -68,7 +68,7 @@ class WeatherBloc extends Bloc<WeatherEvent,WeatherState>{
         yield loaded(weather);
       }
       catch(e){
-        print("hiii");
+        print(e);
         yield notloaded();
       }
     }
