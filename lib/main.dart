@@ -9,9 +9,11 @@ void main()
 {
   runApp(
     MaterialApp(
+    theme: ThemeData(
+      fontFamily: 'gs'
+    ),
     debugShowCheckedModeBanner: false,
     home: Scaffold(
-      // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: BlocProvider(
         create: (context) => WeatherBloc(weatherRepo()),
@@ -28,8 +30,6 @@ class SearchPage extends StatelessWidget {
     final WeatherBloc bloc = BlocProvider.of<WeatherBloc>(context);
     var controller = TextEditingController();
     return ListView(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      // crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Center(
           child: Container(
@@ -45,8 +45,9 @@ class SearchPage extends StatelessWidget {
               {return Container(
                 child:Column(
                   children: <Widget>[
-                    Center(child: Text("Get Weather",style: TextStyle(fontSize: 30.0,color: Colors.black),),),
+                    Center(child: Container(margin:EdgeInsets.only(top:20.0),child: Text("Get Weather",style: TextStyle(fontSize: 30.0,color: Colors.black),)),),
                     Container(
+                      margin: EdgeInsets.only(top: 25.0),
                       width: MediaQuery.of(context).size.width-50.0,
                       child: TextFormField(
                         controller: controller,
@@ -73,14 +74,18 @@ class SearchPage extends StatelessWidget {
 
                       ),
                     ),
-                    MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width-50.0,
-                            color: Colors.blue,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                            child: Text('Get Weather'),
-                            onPressed: (){
-                              bloc.add(FetchWeather(controller.text));   //fetching the event
-                            },
+                    Container(
+                      margin: EdgeInsets.only(top:30.0),
+                      height: 50.0,
+                      child: MaterialButton(
+                              minWidth: MediaQuery.of(context).size.width-50.0,
+                              color: Colors.blue,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child: Text('Get Weather',style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                              onPressed: (){
+                                bloc.add(FetchWeather(controller.text));   //fetching the event
+                              },
+                      ),
                     )
                   ],
                 )
@@ -124,6 +129,7 @@ class showWeather extends StatelessWidget {
                       Text("Min Temprature",style: TextStyle(color: Colors.black, fontSize: 14),),
                     ],
                   ),
+
                   Column(
                     children: <Widget>[
                       Text(weather.getMaxTemp.round().toString()+"°C",style: TextStyle(color: Colors.black, fontSize: 30),),
@@ -132,6 +138,18 @@ class showWeather extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text(weather.getpre.round().toString()+" hpa",style: TextStyle(color: Colors.black, fontSize: 30),),
+              Text("Pressure",style: TextStyle(color: Colors.black, fontSize: 14),),
+              SizedBox(
+                height: 20,
+              ),
+
+              Text(weather.gethumid.round().toString()+" %",style: TextStyle(color: Colors.black, fontSize: 30),),
+              Text("Humidity",style: TextStyle(color: Colors.black, fontSize: 14),),
               SizedBox(
                 height: 20,
               ),
@@ -146,7 +164,6 @@ class showWeather extends StatelessWidget {
                   },
                   color: Colors.lightBlue,
                   child: Text("Search", style: TextStyle(color: Colors.white, fontSize: 16),),
-
                 ),
               )
             ],

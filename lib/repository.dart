@@ -11,7 +11,6 @@ class weatherRepo{
     {
       throw Exception();
     }
-    print("else part");
     return parseJSON(result.body);
   }
 
@@ -21,5 +20,4 @@ class weatherRepo{
     print(jsonmain);
     return WeatherModel.fromJSON(jsonmain);
   }
-
 }
