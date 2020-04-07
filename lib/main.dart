@@ -4,6 +4,7 @@ import 'package:Weather_App/weathermodel.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 void main()
 {
@@ -112,12 +113,22 @@ class showWeather extends StatelessWidget {
     return Container(
           padding: EdgeInsets.only(right: 32, left: 32, top: 10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text('$city',style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
 
-              Text(weather.getTemp.round().toString()+"°C",style: TextStyle(color: Colors.black, fontSize: 50),),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(width:70.0,height:70.0,child: Image.network('http://openweathermap.org/img/w/${weather.icon.toString()}.png',fit: BoxFit.cover)),
+                  Column(children: <Widget>[
+                    Text(weather.getTemp.round().toString()+"°C",style: TextStyle(color: Colors.black, fontSize: 50),),
               Text("Temprature",style: TextStyle(color: Colors.black, fontSize: 14),),
+                  ],)
+                ],
+              ),
+              
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -158,8 +169,15 @@ class showWeather extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+
+              Text(weather.getDesc.toUpperCase()+" ",style: TextStyle(color: Colors.black, fontSize: 30),),
+              Text("Description",style: TextStyle(color: Colors.black, fontSize: 14),),
+              SizedBox(
+                height: 20,
+              ),
               
               Container(
+                margin: EdgeInsets.all(10.0),
                 width: double.infinity,
                 height: 50,
                 child: FlatButton(
@@ -168,7 +186,7 @@ class showWeather extends StatelessWidget {
                     BlocProvider.of<WeatherBloc>(context).add(ResetWeather());
                   },
                   color: Colors.lightBlue,
-                  child: Text("Search", style: TextStyle(color: Colors.white, fontSize: 16),),
+                  child: Text("Back", style: TextStyle(color: Colors.white, fontSize: 20),),
                 ),
               )
             ],
