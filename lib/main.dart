@@ -4,7 +4,6 @@ import 'package:Weather_App/weathermodel.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 void main()
 {
@@ -95,7 +94,28 @@ class SearchPage extends StatelessWidget {
             else if(state is loaded)
               return showWeather(state.getWeather, controller.text);
             else
-              return Text("Error",style: TextStyle(color: Colors.black),);
+              return Center(
+                child: Column(children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 40.0,bottom: 25.0),
+                    width: MediaQuery.of(context).size.width-270.0,
+                    child: Image.asset('assets/nodata.png',fit: BoxFit.cover,)),
+                  Text('Oops!!! No Weather data found...',style: TextStyle(color: Colors.grey,fontSize: 25.0),),
+                  Container(
+                margin: EdgeInsets.only(top:40.0),
+                width: MediaQuery.of(context).size.width-80.0,
+                height: 50,
+                child: FlatButton(
+                  shape: new RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  onPressed: (){
+                    BlocProvider.of<WeatherBloc>(context).add(ResetWeather());
+                  },
+                  color: Colors.lightBlue,
+                  child: Text("Back", style: TextStyle(color: Colors.white, fontSize: 20),),
+                ),
+              )
+                ],),
+              );
           },
         )
       ],      
@@ -115,7 +135,15 @@ class showWeather extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('$city',style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.location_city),
+                    Text('$city',style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+              ),
               SizedBox(height: 10,),
 
               Row(
